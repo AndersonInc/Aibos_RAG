@@ -23,8 +23,8 @@ jobs:
       - name: Build and push production image
         if: github.ref == 'refs/heads/main'
         run: |
-          docker build -t andersoninc12/aibosRAG:latest .
-          docker push andersoninc12/aibosRAG:latest
+          docker build -t andersoninc12/aibosepanet:latest .
+          docker push andersoninc12/aibosepanet:latest
 
       # SSH into VPS and deploy for 'main' branch
       - name: SSH into VPS and deploy for production
@@ -39,7 +39,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
             sudo docker stop aibosRAG || truels -ld 
             sudo docker rm -f aibosRAG || true
-            sudo docker rmi andersoninc12/aibosRAG:latest || true
-            sudo docker pull andersoninc12/aibosRAG:latest
-            sudo docker run  --name epanet -p 8083:3000 andersoninc12/aibosRAG:latest
+            sudo docker rmi andersoninc12/aibosepanet:latest || true
+            sudo docker pull andersoninc12/aibosepanet:latest
+            sudo docker run  --name epanet -p 8083:3000 andersoninc12/aibosepanet:latest
             EOF
